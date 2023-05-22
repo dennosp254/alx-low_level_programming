@@ -12,10 +12,10 @@ int main(void)
 	{
 		putchar(i);
 	}
-	for (j = 65; j <= 90; i++)
+	for (j = 65; j <= 90; j++)
 	{
 		putchar(j);
 	}
-	putchar('j');
+	putchar('\n');
 	return (0);
 }
