@@ -19,7 +19,7 @@ int main(void)
 
 			if (t1 == 8 && t2 == 9)
 				continue;
-			
+
 			putchar(',');
 			putchar(' ');
 		}
