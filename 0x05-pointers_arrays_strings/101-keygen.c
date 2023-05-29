@@ -1,36 +1,42 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
 /**
- * main - Entry point
- * generates random passwords
- * Return: Always 0 (Success)
+ * main - random password generator for 101-crackme
+ *
+ * Return: always 0
  */
-
-#define PASSWORD_LENGTH 10
-
-void generatePassword(char *password)
+int main(void)
 {
-	const char charset[] = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-	int i;
+	int i, j, k, s;
+	char c[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char p[58];
 
-	for (i = 0; i < PASSWORD_LENGTH; i++)
-	{
-        	int index = rand() % (sizeof(charset) - 1);
-
-        	password[i] = charset[index];
-	}
-	password[PASSWORD_LENGTH] = '\0';
-}
-
-int main()
-{
 	srand(time(NULL));
-
-	char password[PASSWORD_LENGTH + 1];
-	generatePassword(password);
-
-	_putchar(password);
-	_putchar('\n');
-	return 0;
+	while (s != 2772)
+	{
+		i = k = s = 0;
+		while ((2772 - 122) > s)
+		{
+			j = rand() % 62;
+			p[i] = c[j];
+			s += c[j];
+			i++;
+		}
+		while (c[k])
+		{
+			if (c[k] == (2772 - s))
+			{
+				p[i] = c[k];
+				s += c[k];
+				i++;
+				break;
+			}
+			k++;
+		}
+	}
+	p[i] = '\0';
+	printf("%s", p);
+	return (0);
 }
