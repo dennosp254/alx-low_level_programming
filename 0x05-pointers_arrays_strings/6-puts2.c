@@ -1,36 +1,20 @@
 #include "main.h"
+
 /**
-  * puts2 - prints every other character of a string
-  * starting with the character
-  * @i: input
-  */
-char *cap_string(char *str)
+ * puts2 - Prints every other character of a string starting
+ * with the first character
+ * @str: String to be printed
+ */
+
+void puts2(char *str)
 {
-	int index = 0;
+	int i = 0;
 
-	while (str[index])
+	for (; str[i] != '\0'; i++)
 	{
-		while (!(str[index] >= 'a' && str[index] <= 'z'))
-			index++;
-
-		if (str[index - 1] == ' ' ||
-		    str[index - 1] == '\t' ||
-		    str[index - 1] == '\n' ||
-		    str[index - 1] == ',' ||
-		    str[index - 1] == ';' ||
-		    str[index - 1] == '.' ||
-		    str[index - 1] == '!' ||
-		    str[index - 1] == '?' ||
-		    str[index - 1] == '"' ||
-		    str[index - 1] == '(' ||
-		    str[index - 1] == ')' ||
-		    str[index - 1] == '{' ||
-		    str[index - 1] == '}' ||
-		    index == 0)
-			str[index] -= 32;
-
-		index++;
+		if (i % 2 == 0)
+			_putchar(str[i]);
 	}
 
-	return (str);
+	_putchar('\n');
 }
