@@ -1,104 +1,84 @@
-#include "holberton.h"
+#include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
 /**
- * countWords - counts the numbers o words in the string
- * @str: source string
+ * _wcount - counts number of words
+ * @sw: string
  *
- *
- * Return: the number of words.
+ * Return: int
  */
-int countWords(char *str)
+int _wcount(char *sw)
 {
-	int words;
+	int l, wc;
 
-	words = 0;
-
-	while (*str)
+	l = 0, wc = 0;
+	if (*(sw + l) == ' ')
+		l++;
+	while (*(sw + l))
 	{
-		if (*str != ' ')
-		{
-			if (*(str + 1) == ' ' || *(str + 1) == '\0')
-				words++;
-			str++;
-		}
-		else
-			str++;
+		if (*(sw + l) == ' ' && *(sw + l - 1) != ' ')
+			wc++;
+		if (*(sw + l) != ' '  && *(sw + l + 1) == 0)
+			wc++;
+		l++;
 	}
-	return (words);
+	return (wc);
 }
 /**
- * countChars - counts the numbers o characters in a string
- * @str: source string
+ * _trspace - Moves adress to remove trailig whitespaces
+ * @st: string
  *
- *
- * Return: the number of words.
+ * Return: Pointer
  */
-int countChars(char *str)
+char *_trspace(char *st)
 {
-	int chars;
-
-	chars = 0;
-	while (*str)
-	{
-		if (*str != ' ')
-		{
-			if (*(str + 1) != ' ' || *(str + 1) != '\0')
-				chars++;
-			str++;
-		}
-		else
-			break;
-	}
-	return (chars);
+	while (*st == ' ')
+		st++;
+	return (st);
 }
 /**
- * strtow - separates the character to an string of words
- * @str: source string
+ * strtow - splits a string into words
+ * @str: string
  *
- *
- * Return: the pointer to the new array of words.
+ * Return: Double Pointer
  */
 char **strtow(char *str)
 {
-	int numWords, numChars, i, j;
-	char **words;
+	char **s, *ts;
+	int l, l2, wc, i, j, fr, k;
 
-	i = 0;
-	if (str == NULL || *str == '\0')
-		return (NULL);
-	numWords = countWords(str);
-	if (numWords == 0)
-		return (NULL);
-	words = (char **) malloc((numWords + 1) * sizeof(char *));
-	if (words == NULL)
+	if (str == NULL || *str == 0)
+		return (0);
+	fr = 0;
+	wc = _wcount(str);
+	if (wc == 0)
+		return (0);
+	s = malloc((wc + 1) * sizeof(char *));
+	if (s == 0)
+		return (0);
+	ts = _trspace(str);
+	for (i = 0; i < wc; i++)
 	{
-		free(words);
-		return (NULL);
-	}
-	while (i < numWords)
-	{
-		if (*str == ' ')
-			str++;
-		else
+		l = 0;
+		while (*(ts + l) != ' ' && *(ts + l) != 0)
+			l++;
+		s[i] = malloc((l + 1) * sizeof(char));
+		if (s[i] == 0)
 		{
-			numChars = countChars(str);
-			*(words + i) = (char *) malloc((numChars + 1) * sizeof(char));
-			if (*(words + i) == NULL)
-			{
-				for (j = 0; j < i; j++)
-					free(*(words + j));
-				free(words);
-				return (NULL);
-			}
-			for (j = 0; j < numChars; j++)
-			{
-				*(*(words + i) + j) = *str;
-				str++; }
-			*(*(words + i) + j) = '\0';
-			i++;
+			fr = 1;
+			break;
 		}
+		for (j = 0, l2 = 0; l2 < l; l2++, j++)
+			s[i][j] = *(ts + l2);
+		s[i][j] = '\0';
+		ts = _trspace(ts + l);
 	}
-	*(words + numWords) = NULL;
-	return (words);
+	s[i] = NULL;
+	if (fr == 1)
+	{
+		for (k = 0; k <= i; k++)
+			free(s[k]);
+		free(s);
+	}
+	return (s);
 }
